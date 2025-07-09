@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: devopsvika
+      POSTGRES_PASSWORD: secret123
+      POSTGRES_DB: dbku
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://devopsvika:secret123@db:5432/dbku
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5001:5001"
+    depends_on:
+      - backend
