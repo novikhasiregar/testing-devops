@@ -4,5 +4,10 @@ jobs:
   vika-job:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+      
       - name: testing ci cd
         run: echo "Heii vikaaa. This is your testing ci cd!"
+
+      - name: Liat isi repo
+        run: ls -la
