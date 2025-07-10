@@ -1,0 +1,8 @@
+name: Test CI 
+on: push 
+jobs:
+  vika-job:
+    runs-on: ubuntu-latest
+    steps:
+      name: testing ci cd
+      run: echo "Heii vikaaa. This is your testing ci cd!"
