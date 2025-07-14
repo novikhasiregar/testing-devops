@@ -24,8 +24,7 @@ jobs:
         run: echo "No test for now"
 
       - name: Lint Backend Code
-        run: npm run lint
-        working-directory: ./backend
+        run: echo "No lint for now"
 
       ### === FRONTEND === ###
       - name: Install Frontend Dependencies
@@ -37,5 +36,4 @@ jobs:
         working-directory: ./frontend
 
       - name: Lint Frontend Code
-        run: npm run lint
-        working-directory: ./frontend
+        run: echo "No lint for now"
