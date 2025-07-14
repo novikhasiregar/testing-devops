@@ -1,21 +1,42 @@
-name: Vika Pipeline
+name: Build Frontend & Backend
+
 on:
   push:
-    branches: [vika] # Trigger on pushes to main branch
+    branches: [vika]
+
 jobs:
   nodejs-build:
-    runs-on: ubuntu-latest # Use GitHub's free Linux runner
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3 # Check out the repository code
-      - name: Set up Node.js # Install Node.js environment
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use Node.js 18 for consistency
-      - name: Cache dependencies # Cache node_modules to speed up builds
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm # Cache npm’s global cache
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} # Key based on OS and package-lock.json
-      - run: npm ci # Install dependencies reliably using package-lock.json
-      - run: npm test # Run tests defined in package.json
-      - run: npm run lint # Run ESLint to ensure code quality
+          node-version: '18'
+
+      ### === BACKEND === ###
+      - name: Install Backend Dependencies
+        run: npm ci
+        working-directory: ./backend
+
+      - name: Run Backend Tests
+        run: npm test
+        working-directory: ./backend
+
+      - name: Lint Backend Code
+        run: npm run lint
+        working-directory: ./backend
+
+      ### === FRONTEND === ###
+      - name: Install Frontend Dependencies
+        run: npm ci
+        working-directory: ./frontend
+
+      - name: Build Frontend
+        run: npm run build
+        working-directory: ./frontend
+
+      - name: Lint Frontend Code
+        run: npm run lint
+        working-directory: ./frontend
