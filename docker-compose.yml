@@ -7,7 +7,7 @@ services:
       POSTGRES_PASSWORD: secret123
       POSTGRES_DB: dbku
     ports:
-      - "5432:5432"
+      - "5002:5432"
 
   backend:
     build: ./backend
