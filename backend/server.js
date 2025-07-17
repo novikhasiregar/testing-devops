@@ -5,6 +5,9 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 
+const cors = require('cors');
+app.use(cors());
+
 // Koneksi ke PostgreSQL
 const sequelize = new Sequelize(process.env.DATABASE_URL);
 
@@ -39,3 +42,4 @@ app.post('/items', async (req, res) => {
 app.listen(5000, () => {
   console.log('Backend running on http://localhost:5000');
 });
+
