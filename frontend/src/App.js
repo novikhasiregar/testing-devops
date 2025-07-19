@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-require('dotenv').config();
 const backendURL = process.env.REACT_APP_BACKEND_URL || "http:://localhost:5000";
 
 function App() {
