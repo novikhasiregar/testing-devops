@@ -45,9 +45,14 @@ jobs:
   zap:
     name: OWASP ZAP Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.11.0
         with:
           target: 'https://testing-dev-frontend.onrender.com'
+          fail_action: false
+          issue_title: "ZAP Security Scan Report"
           
