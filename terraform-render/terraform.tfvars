@@ -1,0 +1,5 @@
+RENDER_API_KEY = "rnd_fUpjqtoC0FXgbJwP7Uy55gvpkz4p"
+OWNER_ID       = "tea-d1sucih5pdvs73cvne2g"
+repo_url       = "https://github.com/novikhasiregar/testing-devops"
+repo_branch    = "devs"
+DATABASE_URL   = "postgresql://devopsvika:p7lROea6ZuxewsIl86pEr0nNMxnRaYcp@dpg-d1tlq2re5dus73dni3e0-a/dbku_ov30"

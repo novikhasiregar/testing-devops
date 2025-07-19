@@ -8,7 +8,7 @@ function App() {
 
   // Fetch Items dari Backend
   useEffect(() => {
-    axios.get('http://localhost:5000/items')
+    axios.get('http://192.168.1.182:5000/items')
       .then(res => setItems(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -16,7 +16,7 @@ function App() {
   // Handle Submit untuk Tambah Item
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/items', { name, price })
+    axios.post('http://192.168.1.182:5000/items', { name, price })
       .then(res => setItems([...items, res.data]))
       .catch(err => console.error(err));
   };
