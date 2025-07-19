@@ -2,7 +2,7 @@ name: Build Frontend & Backend
 
 on:
   push:
-    branches: [vika]
+    branches: [devs]
 
 jobs:
   nodejs-build:
