@@ -54,5 +54,7 @@ jobs:
         with:
           target: 'https://testing-dev-frontend.onrender.com'
           fail_action: false
+          artifact_name: 'zap-report'
           issue_title: "ZAP Security Scan Report"
+          cmd_options: '-a' #passive scan buat prod
           
