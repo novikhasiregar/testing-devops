@@ -13,8 +13,6 @@ services:
       - key: DATABASE_URL
         value: your_postgres_url
     autoDeploy: true
-    healthCheckPath: / # sesuaikan jika perlu
-    context: ./backend
 
   - type: web
     name: frontend
@@ -30,4 +28,3 @@ services:
       - key: VITE_BACKEND_URL
         value: https://backend-cjif.onrender.com # ganti setelah backend live
     autoDeploy: true
-    context: ./frontend
