@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: backend
+    env: docker
+    plan: free
+    repo: https://github.com/novikhasiregar/testing-devops
+    branch: main
+    dockerContext: ./backend
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: items-db
+          property: connectionString
+
+  - type: web
+    name: frontend
+    env: docker
+    plan: free
+    repo: https://github.com/novikhasiregar/testing-devops
+    branch: main
+    dockerContext: ./frontend
+    dockerfilePath: Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: VITE_BACKEND_URL
+        value: https://testing-backend.onrender.com
+        # Ganti "backend-name" dengan actual backend service kamu nanti
+        # atau bikin dynamic dari Render URL saat udah running
+        # contoh: https://testing-backend.onrender.com
+
+databases:
+  - name: items-db
+    plan: free
