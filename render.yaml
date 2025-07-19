@@ -2,25 +2,32 @@ services:
   - type: web
     name: backend
     env: docker
-    repo: https://github.com/novikhasiregar/testing-devops
-    branch: devs
-    dockerfilePath: ./backend/Dockerfile
-    context: ./frontend 
-    buildCommand: "" 
-    autoDeploy: true
+    region: oregon
     plan: free
-    envVars: 
+    dockerfilePath: ./backend/Dockerfile
+    buildCommand: "" # karena udah ditangani Dockerfile
+    startCommand: "" # karena sudah di Dockerfile
+    envVars:
       - key: PORT
         value: 5000
+      - key: DATABASE_URL
+        value: your_postgres_url
+    autoDeploy: true
+    healthCheckPath: / # sesuaikan jika perlu
+    context: ./backend
 
-
- - type: web
+  - type: web
     name: frontend
     env: docker
-    repo: https://github.com/novikhasiregar/testing-devops
-    branch: devs
-    dockerfilePath: ./frontend/Dockerfile
-    buildCommand: "" 
-    context: ./frontend 
-    autoDeploy: true
+    region: oregon
     plan: free
+    dockerfilePath: ./frontend/Dockerfile
+    buildCommand: "" # handled by Dockerfile
+    startCommand: "" # handled by Dockerfile
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: VITE_BACKEND_URL
+        value: https://backend-cjif.onrender.com # ganti setelah backend live
+    autoDeploy: true
+    context: ./frontend
