@@ -26,23 +26,28 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
-  trivy:
+  trivy-scan:
     name: Trivy Image Scan
     runs-on: ubuntu-latest
     steps:
       - name: Install Trivy
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ghcr.io/novikhasiregar/node-postgresql-app-frontend:latest
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
+        run: |
+          sudo apt-get update
+          sudo apt-get install wget apt-transport-https gnupg lsb-release -y
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+          echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install trivy -y
+
+      - name: Scan container image
+        run: trivy image ghcr.io/novikhasiregar/node-postgresql-app-frontend:latest
 
   zap:
     name: OWASP ZAP Scan
     runs-on: ubuntu-latest
     steps:
       - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.7.0
+        uses: zaproxy/action-baseline@v0.11.0
         with:
           target: 'https://testing-dev-frontend.onrender.com'
+          
