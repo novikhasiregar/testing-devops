@@ -45,19 +45,12 @@ jobs:
   zap:
     name: OWASP ZAP Scan
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    steps:
+    steps:       
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          ref: devs
-
+        
       # Run the ZAP security scan against deployed application
       - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.12.0
+        uses: zaproxy/action-baseline@v0.14.0
         with:
           target: 'https://testing-dev-frontend.onrender.com'
-          rules_file_name: '.zap/rules.tsv'
-          cmd_options: '-a'
