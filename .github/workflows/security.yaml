@@ -57,4 +57,5 @@ jobs:
         uses: zaproxy/action-baseline@v0.11.0
         with:
           target: 'https://testing-dev-frontend.onrender.com'
-          
+          fail_action: false
+          artifact_name: zap-scan-report
