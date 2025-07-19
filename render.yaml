@@ -5,6 +5,8 @@ services:
     repo: https://github.com/novikhasiregar/testing-devops
     branch: devs
     dockerfilePath: ./backend/Dockerfile
+    context: ./frontend 
+    buildCommand: "" 
     autoDeploy: true
     plan: free
     envVars: 
@@ -12,11 +14,13 @@ services:
         value: 5000
 
 
-  - type: web
+ - type: web
     name: frontend
     env: docker
     repo: https://github.com/novikhasiregar/testing-devops
     branch: devs
     dockerfilePath: ./frontend/Dockerfile
+    buildCommand: "" 
+    context: ./frontend 
     autoDeploy: true
     plan: free
