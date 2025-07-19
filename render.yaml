@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: testing-devops-backend
+    env: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        sync: false  # Jangan ditimpa, ambil dari dashboard manual
+    buildFilter:
+      paths:
+        - backend/**
+
+  - type: web
+    name: testing-devops-frontend
+    env: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./frontend/Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 5001
+      - key: VITE_BACKEND_URL
+        value: https://testing-devops-backend.onrender.com
+    buildFilter:
+      paths:
+        - frontend/**
