@@ -1,0 +1,67 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: 
+      - devs
+
+jobs:
+  #Initial setup job
+  setup: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+  # Build job 
+  nodejs-build:
+    runs-on: ubuntu-latest
+    needs: setup #depens on setup job
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      ### === BACKEND === ###
+      - name: Install Backend Dependencies
+        run: npm install
+        working-directory: ./backend
+
+      ### === FRONTEND === ###
+      - name: Install Frontend Dependencies
+        run: npm install
+        working-directory: ./frontend
+
+  deploy: 
+    runs-on: ubuntu-latest
+    needs: nodejs-build
+    steps: 
+      - name: Setup k3d cluster
+        run: k3d cluster create dev-cluster --servers 1 --agent 2 --port 8080:80@loadbalancer
+      - name: Apply kubernetes manifests
+        run: kubectl apply -f deploykube/ #apply all deployment in folder deploykube
+      - name: Deploy App
+        run: kubectl rollout restart deployment -n default #restart deployment for zero-down
+        
+  terraform:
+    runs-on: ubuntu-latest
+    needs: deploy #run after deploy
+    steps:
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./terraform-render
+
+      - name: Terraform Plan
+        run: terraform plan -out=infra.plan
+        working-directory: ./terraform-render
+        
+      - name: Terraform Apply 
+        run: terraform apply infra.plan -auto-approve
+        working-directory: ./terraform-render
+
+
+  
