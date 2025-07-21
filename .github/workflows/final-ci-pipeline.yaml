@@ -39,10 +39,26 @@ jobs:
     runs-on: ubuntu-latest
     needs: nodejs-build
     steps: 
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
       - name: Setup k3d cluster
-        run: k3d cluster create dev-cluster --servers 1 --agent 2 --port 8080:80@loadbalancer
+        uses: AbsaOSS/k3d-action@v2
+        with: 
+          cluster-name: dev-cluster
+          args: "--agents 2 --servers 1 --port 8080:80@loadbalancer"
+
+      - name: Setup Kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'   
+      
+      - name: Wait for cluster ready
+        run: sleep 30
+
       - name: Apply kubernetes manifests
         run: kubectl apply -f deploykube/ #apply all deployment in folder deploykube
+
       - name: Deploy App
         run: kubectl rollout restart deployment -n default #restart deployment for zero-down
         
@@ -50,6 +66,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy #run after deploy
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
 
