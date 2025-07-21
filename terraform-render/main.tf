@@ -13,7 +13,7 @@ provider "render" {
 }
 
 resource "render_web_service" "backend" {
-  name   = "testing-dev-backend"
+  name   = "terraform-pipeline-devops-backend"
   plan   = "starter"
   region = "oregon"
 
@@ -39,7 +39,7 @@ resource "render_web_service" "backend" {
 }
 
 resource "render_web_service" "frontend" {
-  name   = "testing-dev-frontend"
+  name   = "terraform-pipeline-devops-frontend"
   plan   = "starter"
   region = "oregon"
 
