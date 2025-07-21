@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: node-postgresql-app-frontend:latest
-        imagePullPolicy: Never
+        image: ghcr.io/novikhasiregar/node-postgresql-app-frontend:latest
         ports:
         - containerPort: 5001
 ---

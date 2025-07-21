@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: backend
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: backend
@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: node-postgresql-app-backend:latest
-        imagePullPolicy: Never
+        image: ghcr.io/novikhasiregar/node-postgresql-app-backend:latest
         env:
         - name: DATABASE_URL
           value: "postgres://devopsvika:secret123@db:5432/dbku"
