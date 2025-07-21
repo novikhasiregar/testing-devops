@@ -48,13 +48,12 @@ jobs:
     permissions:
       contents: read
       issues: write
-    steps:
+    steps:       
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      # Run the ZAP security scan against deployed application
       - name: ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.11.0
+        uses: zaproxy/action-baseline@v0.14.0
         with:
           target: 'https://testing-dev-frontend.onrender.com'
-          fail_action: false
-          artifact_name: 'zap-report'
-          issue_title: "ZAP Security Scan Report"
-          cmd_options: '-a' #passive scan buat prod
-          
