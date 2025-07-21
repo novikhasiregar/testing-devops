@@ -2,8 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: 
-      - devs
+    branches: [devs]
 
 jobs:
   #Initial setup job
@@ -25,13 +24,13 @@ jobs:
 
       ### === BACKEND === ###
       - name: Install Backend Dependencies
-        run: npm install
-        working-directory: backend
+        run: npm ci
+        working-directory: ./backend
 
       ### === FRONTEND === ###
       - name: Install Frontend Dependencies
-        run: npm install
-        working-directory: frontend
+        run: npm ci
+        working-directory: ./frontend
 
   deploy: 
     runs-on: ubuntu-latest
@@ -53,15 +52,15 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: terraform-render
+        working-directory: ./terraform-render
 
       - name: Terraform Plan
         run: terraform plan -out=infra.plan
-        working-directory: terraform-render
+        working-directory: ./terraform-render
         
       - name: Terraform Apply 
         run: terraform apply infra.plan -auto-approve
-        working-directory: terraform-render
+        working-directory: ./terraform-render
 
 
   
