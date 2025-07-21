@@ -81,7 +81,7 @@ jobs:
         working-directory: ./terraform-render
         
       - name: Terraform Apply 
-        run: terraform apply infra.plan -auto-approve
+        run: terraform apply infra.plan
         working-directory: ./terraform-render
 
 
