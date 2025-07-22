@@ -8,6 +8,22 @@ app.use(express.json());
 const cors = require('cors');
 app.use(cors());
 
+const prometheus = require('express-prom-bundle');
+const client = require('prom-client');
+
+// const metricsMiddleware = prometheus({
+//   includeMethod: true,
+//   includePath: true,
+//   promClient: { collectDefaultMetrics: {} }
+// })
+
+// app.use(metricsMiddleware);
+
+
+// Enable collection of default metrics (CPU, memory, etc.)
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics({ register: client.register });
+
 // Koneksi ke PostgreSQL
 const sequelize = new Sequelize(process.env.DATABASE_URL);
 
@@ -36,6 +52,13 @@ app.post('/items', async (req, res) => {
   const { name, price } = req.body;
   const newItem = await Item.create({ name, price });
   res.json(newItem);
+});
+
+// Metrics endpoint
+app.get('/metrics', async (req, res) => {
+  res.setHeader('Content-Type', client.register.contentType);
+  const metrics = await client.register.metrics();
+  res.send(metrics);
 });
 
 // Menjalankan Server
