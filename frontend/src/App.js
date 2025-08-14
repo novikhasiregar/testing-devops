@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-const backendURL = process.env.REACT_APP_BACKEND_URL || "http:://localhost:5000";
+const backendURL = process.env.REACT_APP_BACKEND_URL || "http://127.0.01.:5000";
 
 function App() {
   const [items, setItems] = useState([]);
