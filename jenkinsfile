@@ -1,6 +1,10 @@
 pipeline {
     agent {node 'agent1'}
 
+    triggers {
+        githubPush()
+    }
+
     environment {
         APPSCAN_URL = "https://lab-ase:9443/ase"
         ASEAPPLICATION = "AppsTesting"
