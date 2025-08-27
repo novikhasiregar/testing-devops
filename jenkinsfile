@@ -1,0 +1,30 @@
+pipeline {
+    agent {node 'agent1'}
+
+    environment {
+        APPSCAN_URL = "https://lab-ase:9443/ase"
+        ASEAPPLICATION = "AppsTesting"
+        PROJECT_DIR = "${WORKSPACE}"
+        criticalThreshold = "0"
+        highThreshold = "5"
+        mediumThreshold = "10"
+        lowThreshold = "20"        
+        ENV_FILE = "/opt/appscan/env.list"
+        GITHUB_REPO = "https://github.com/novikhasiregar/testing-devops"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'devs',
+                    url: "${GITHUB_REPO}",
+                    credentialsId: 'github-creds'
+            }
+        }
+        stage('Build & Scan') {
+            steps {
+                sh 'echo "running bossquuue"'
+            }
+        }
+    }
+}
